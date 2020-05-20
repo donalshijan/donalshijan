@@ -1,0 +1,257 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+html{
+  background-color: #ffffff;
+}
+:root{
+  --sqrt-of-three:;
+  --width-of-navbar:70;
+  --number-of-navbarelements:6;
+  --navhexagongap:.02;  /*once this value reaches .25 margin left becomes 0 */
+  --hexagongap: 5%;
+  --hexagonoutlinecolor:#00ff55;
+  --hexagoncolor:#ffffff;
+  --hexagongradientmaxcolor: #b3ffcb,#ffffff;
+  --x:0px;
+  --y:0px;
+  --sidebarheight:50;
+  --sidebarhexagongap:5%;
+  --sidebarhexagoncolor:blue;
+}
+body{
+--width-of-cell:calc(100vw / var(--number-of-columns));
+}
+
+
+.navbar{
+  position: fixed;
+  top: 0;
+  z-index: 3;
+  margin-left: calc(calc(calc(100 - var(--width-of-navbar)) / 2) * 1vw);
+  margin-right: auto;
+  width: calc(var(--width-of-navbar) * 1vw);
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  visibility:  hidden;
+  }
+.navhexagon{
+  visibility: visible;
+  flex-grow: 0;
+  flex-shrink: 0;
+  --width-of-navhexagon: calc(calc(var(--width-of-navbar) / var(--number-of-navbarelements)) * 1vw);
+  flex-basis: var(--width-of-navhexagon);
+  height:  calc(var(--width-of-navhexagon) * calc(var(--sqrt-of-three) / 2));
+/*The math used here helps to maintain the ratio of 2 : square root of 3*/
+  background-color: #00ff55;
+  clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
+  text-decoration: none;
+  visibility: hidden;
+}
+.navbar .navhexagon + .navhexagon /*In order to select every navhexagon element except the first one*/
+{
+margin-left: calc(calc(var(--width-of-navhexagon) / -4) + calc(var(--width-of-navhexagon) *  var(--navhexagongap)));
+}
+.navhexagon:nth-child(even)
+{ margin-top: calc(calc(var(--width-of-navhexagon) * calc(var(--sqrt-of-three) / 4)) + calc(calc(var(--width-of-navhexagon) * var(--navhexagongap)) * var(--sqrt-of-three)));
+}
+.navinnerhexagon{
+  width: auto;
+  height: 100%;
+  transform: scale(.97);
+  clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: 2vw;
+  background-color:rgba(158, 158, 158, 0.7);
+
+  text-align: center;
+  color: #ffffff;
+}
+.fas{
+  font-size: 1.2em;
+}
+
+/* padding-bottom: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (var(--sqrt-of-three) / 4));
+padding-top: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (var(--sqrt-of-three) / 4)); */
+
+.griddiv{
+  /* position: static;
+  top: 0;
+  left: 0; */
+  margin: 0;
+  padding: 0;
+  width: 100vw;
+  overflow-x: hidden;
+  background: radial-gradient(circle at var(--x) var(--y),var(--hexagonoutlinecolor) 0%, var(--hexagongradientmaxcolor) 100%);
+  display: grid;
+  grid-template-columns : repeat(var(--number-of-columns), 1fr);
+  grid-row-gap: calc(0.2 * calc(calc(2.5 * var(--width-of-cell)) / var(--sqrt-of-three)));
+  overflow-y: hidden;
+}
+
+.gridcell{
+  width: var(--width-of-cell);
+  padding-bottom : calc(calc(2.5 * var(--width-of-cell)) / var(--sqrt-of-three));
+  position: relative;
+  overflow: visible;
+  visibility: hidden;
+}
+.hexagon{
+  width: calc(100% - var(--hexagongap));
+  height: calc(100% - var(--hexagongap));
+  position: absolute;
+  background-color: var(--hexagoncolor);
+  visibility: visible;
+  pointer-events: none;
+}
+.outerhexagon1{
+  top: calc(-30% + calc(var(--hexagongap) / 2));
+  left: calc(0% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+}
+.outerhexagon2{
+  top: calc(-30% + calc(var(--hexagongap) / 2));
+  left: calc(50% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+  }
+
+.outerhexagon3{
+  top: calc(0% + calc(var(--hexagongap) / 2));
+  left: calc(25% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+.outerhexagon4{
+  top: calc(0% + calc(var(--hexagongap) / 2));
+  left: calc(75% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+  visibility: hidden;
+}
+.outerhexagon5{
+  top: calc(30% + calc(var(--hexagongap) / 2));
+  left: calc(0% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+.outerhexagon6{
+  top: calc(30% + calc(var(--hexagongap) / 2));
+  left: calc(50% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+.outerhexagon7{
+  top: calc(60% + calc(var(--hexagongap) / 2));
+  left: calc(25% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+.outerhexagon8{
+  top: calc(60% + calc(var(--hexagongap) / 2));
+  left: calc(75% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+  visibility: hidden;
+
+}
+.outerhexagon9{
+  top: calc(0% + calc(var(--hexagongap) / 2));
+  left: calc(-25% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+.outerhexagon10{
+  top: calc(60% + calc(var(--hexagongap) / 2));
+  left: calc(-25% + calc(var(--hexagongap) / 2));
+  clip-path: polygon(25% 0%, 50% 10%, 50% 30%, 25% 40%, 0% 30%, 0% 10%);
+
+}
+#sidebarelement1{
+
+}
+
+#sidebarelement2{
+
+}
+#sidebarelement3{
+
+}
+#sidebarelement4{
+
+}
+#sidebarelement5{
+
+}
+#sidebarelement6{
+
+}
+#sidebarelement7{
+
+}
+.sidebarelement{
+  width: 50%;
+  height:40%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: all;
+  text-decoration: none;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  color: #3498db;
+  }
+.fonts{
+  transition: 300ms;
+  /* transition-duration: ;
+    transition-property:;
+    transition-delay:;
+
+   */
+   color: #3498db;
+   transition-timing-function: cubic-bezier(.18,.89,.32,1.28);
+}
+
+.sidebarelement:hover .fonts{
+  transform: scale(1.3);
+  color: var(--hexagoncolor);
+}
+
+.fab{
+  text-align: center;
+  font-size: 4em;
+  text-decoration: none;
+  color: #3498db;
+}
+
+.sidebarelement::before{
+  content: '';
+  position: absolute;
+  background-color: #3498db;
+  width: 120%;
+  height: 120%;
+  transform: rotate(45deg);
+  left: -110%;
+  top: 90%;
+}
+.sidebarelement:hover::before{
+  animation: aaa 700ms 1;
+  animation-fill-mode: forwards;
+  }
+@keyframes aaa {
+  0%{
+    left: -110%;
+    top: 90%;
+  }
+  50%{
+    left: 10%;
+    top: -30%;
+  }
+  100%{
+    top: -10%;
+    left: -10%;
+  }
+}
