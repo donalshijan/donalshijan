@@ -7,92 +7,142 @@ html{
 }
 :root{
   --sqrt-of-three:;
-  --width-of-navbar:70;
-  --number-of-navbarelements:6;
+  --width-of-navbar:100;
+  --number-of-navbarelements:5;
   --navhexagongap:.02;  /*once this value reaches .25 margin left becomes 0 */
   --hexagongap: 5%;
   --hexagonoutlinecolor:#00ff55;
-  --hexagoncolor:#ffffff;
-  --hexagongradientmaxcolor: #b3ffcb,#ffffff;
+  --hexagoncolor:#000000;
+  --navcellcolor:#4527a0;
+  --hexagongradientmaxcolor: #4527a0 60%,#ffffff;
   --x:0px;
   --y:0px;
   --sidebarheight:50;
   --sidebarhexagongap:5%;
   --sidebarhexagoncolor:blue;
-}
+/*This color is actually the same as sidebarelmentcolor but converted to rgb*/
+  --fonticonwidth:;
+  --fonticonheight:;
+  --white:#ffffff;
+  --navicontoppadding:5px;
+  --naviconbottompadding:5px;
+  }
 body{
+--sidebarelementcolor:var(--hexagonoutlinecolor);
 --width-of-cell:calc(100vw / var(--number-of-columns));
+--width-of-navcell: calc(calc(var(--width-of-navbar) / var(--number-of-navbarelements)) * 1vw);
+--sidebaricongradient: linear-gradient(45deg, var(--hexagoncolor) 50%, var(--sidebarelementcolor) 50%);
+--sidebargradient: linear-gradient(45deg, var(--white)  50%, var(--hexagoncolor) 50%)
+
 }
 
 
 .navbar{
-  position: fixed;
-  top: 0;
-  z-index: 3;
   margin-left: calc(calc(calc(100 - var(--width-of-navbar)) / 2) * 1vw);
   margin-right: auto;
   width: calc(var(--width-of-navbar) * 1vw);
   display: flex;
-  align-items: flex-start;
-  justify-content: center;
-  visibility:  hidden;
+  align-items: center;
+  justify-content: space-around;
+  visibility:  visible;
+  background-color: var(--navcellcolor);
+
+
   }
-.navhexagon{
-  visibility: visible;
-  flex-grow: 0;
-  flex-shrink: 0;
-  --width-of-navhexagon: calc(calc(var(--width-of-navbar) / var(--number-of-navbarelements)) * 1vw);
-  flex-basis: var(--width-of-navhexagon);
-  height:  calc(var(--width-of-navhexagon) * calc(var(--sqrt-of-three) / 2));
-/*The math used here helps to maintain the ratio of 2 : square root of 3*/
-  background-color: #00ff55;
-  clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
+.navcell{
+  flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: auto;
+  background-color: pink;
   text-decoration: none;
-  visibility: hidden;
-}
-.navbar .navhexagon + .navhexagon /*In order to select every navhexagon element except the first one*/
-{
-margin-left: calc(calc(var(--width-of-navhexagon) / -4) + calc(var(--width-of-navhexagon) *  var(--navhexagongap)));
-}
-.navhexagon:nth-child(even)
-{ margin-top: calc(calc(var(--width-of-navhexagon) * calc(var(--sqrt-of-three) / 4)) + calc(calc(var(--width-of-navhexagon) * var(--navhexagongap)) * var(--sqrt-of-three)));
-}
-.navinnerhexagon{
-  width: auto;
-  height: 100%;
-  transform: scale(.97);
-  clip-path: polygon(0% 50%, 25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%);
   visibility: visible;
-  display: flex;
-  flex-direction: column;
+
+}
+
+
+.navinnercell{
+  position: relative;
+  /*
+  transform: scale(.8);
+  */
+  visibility: visible;
+  display: grid;
+  grid-template-columns: 1fr 3fr;
   align-items: center;
   justify-content: center;
-  font-size: 2vw;
-  background-color:rgba(158, 158, 158, 0.7);
-
+  grid-column-gap: 1em;
+  /*
+  flex-direction: row;
+  justify-content: flex-start;
+  */
   text-align: center;
+  background:var(--navcellcolor);
+  transition: 250ms box-shadow ease-in-out;
   color: #ffffff;
+  box-shadow: 20px 20px 5px rgba(0, 0, 0, 0);
+  text-shadow: 0px 2px 5px rgba(0,0,0,0.2);
+
+}
+.navinnercell:hover.navinnercell{
+  background: var(--hexagonoutlinecolor);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.5);
+  /* opacity: .8; */
+  /* background: linear-gradient(45deg,var(--hexagonoutlinecolor) 0%,#ffffff); */
 }
 .fas{
-  font-size: 1.2em;
+ justify-self:end;
+  font-size: 1.5em;
+  line-height: 1em;
 }
 
-/* padding-bottom: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (var(--sqrt-of-three) / 4));
-padding-top: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (var(--sqrt-of-three) / 4)); */
+
+.icon{
+padding: var(--navicontoppadding) 0 var(--naviconbottompadding);
+text-shadow: 2px 3px 2px rgba(0,0,0,.5);
+border-radius: 10%;
+transition: 250ms transform ease-in-out;
+color: rgba(255, 255, 255, 0.5);
+
+}
+.navinnercell:hover .icon{
+  box-shadow: -5px 5px 20px 5px var(--hexagonoutlinecolor);
+  transform: scale(1.15);
+ color: rgba(255, 255, 255, 1);
+ background: var(--hexagonoutlinecolor);
+}
+.text{
+  justify-self:start;
+  font-size: 1.5em;
+  text-shadow: 2px 3px 2px rgba(0,0,0,.5);
+  transform: rotateY(0deg);
+  border-radius: 10%;
+  transition: 250ms transform ease-in-out;
+  color: rgba(255, 255, 255, 0.5);
+}
+.navinnercell:hover .text{
+    box-shadow: 3px 3px 20px 5px var(--hexagonoutlinecolor);
+    transform: scale(1.15);
+    color: rgba(255, 255, 255, 1);
+    background: var(--hexagonoutlinecolor);
+}
+
+
 
 .griddiv{
-  /* position: static;
+  /*
+  position: static;
   top: 0;
   left: 0; */
   margin: 0;
   padding: 0;
   width: 100vw;
   overflow-x: hidden;
-  background: radial-gradient(circle at var(--x) var(--y),var(--hexagonoutlinecolor) 0%, var(--hexagongradientmaxcolor) 100%);
+  background: radial-gradient(circle at var(--x) var(--y),var(--hexagonoutlinecolor) 5%, var(--hexagongradientmaxcolor) 100%);
   display: grid;
   grid-template-columns : repeat(var(--number-of-columns), 1fr);
   grid-row-gap: calc(0.2 * calc(calc(2.5 * var(--width-of-cell)) / var(--sqrt-of-three)));
   overflow-y: hidden;
+
 }
 
 .gridcell{
@@ -109,6 +159,7 @@ padding-top: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (
   background-color: var(--hexagoncolor);
   visibility: visible;
   pointer-events: none;
+
 }
 .outerhexagon1{
   top: calc(-30% + calc(var(--hexagongap) / 2));
@@ -202,45 +253,66 @@ padding-top: calc((var(--width-of-navbar) / var(--number-of-navbarelements)) * (
   pointer-events: all;
   text-decoration: none;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  color: #3498db;
-  }
+  background:var(--sidebargradient);
+  background-size: 400%;
+  background-repeat: no-repeat;
+  background-position: top right;
+  transition: 1200ms;
+  transition-timing-function: cubic-bezier(.18,.89,.32,1.28);
+
+}
 .fonts{
-  transition: 300ms;
+  flex-basis:  100%;
+
+  transition: 1200ms;
   /* transition-duration: ;
     transition-property:;
     transition-delay:;
 
    */
-   color: #3498db;
+   /* color: #3498db; */
    transition-timing-function: cubic-bezier(.18,.89,.32,1.28);
+   background: var(--sidebaricongradient);
+   background-size: 400%;
+   background-repeat: no-repeat;
+   background-position: right top;
+   -webkit-background-clip: text;
+   background-clip: text;
+   color: transparent;
+
 }
 
 .sidebarelement:hover .fonts{
   transform: scale(1.3);
-  color: var(--hexagoncolor);
+  /* color: var(--hexagoncolor); */
+  background-position:bottom left;
+}
+
+.sidebarelement:hover.sidebarelement{
+  background-position: bottom left;
 }
 
 .fab{
   text-align: center;
   font-size: 4em;
   text-decoration: none;
-  color: #3498db;
+  /* color: #3498db; */
 }
 
-.sidebarelement::before{
+/* .sidebarelement::before{
   content: '';
   position: absolute;
-  background-color: #3498db;
+  background-color:var(--sidebarelementcolor);
   width: 120%;
   height: 120%;
   transform: rotate(45deg);
   left: -110%;
   top: 90%;
-}
-.sidebarelement:hover::before{
+} */
+/* .sidebarelement:hover::before{
   animation: aaa 700ms 1;
   animation-fill-mode: forwards;
-  }
+  } */
 @keyframes aaa {
   0%{
     left: -110%;
