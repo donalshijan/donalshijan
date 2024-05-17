@@ -3,18 +3,101 @@ const colortwodark = ['#4527a0','#049c62','#029991','#ad0051','#025094','#770191
 const rootelement = document.querySelector(':root');
 rootelement.style.setProperty('--sqrt-of-three',Math.sqrt(3));
 var colorindex=0;
-rootelement.style.setProperty('--hexagonoutlinecolor',coloronelight[colorindex]);
-rootelement.style.setProperty('--hexagongradientmaxcolor',`${colortwodark[colorindex]} 60%,#ffffff`);
-rootelement.style.setProperty('--navcellcolor',`${colortwodark[colorindex]}`);
-let changecolor =function()
-{colorindex++;
-if(colorindex ==6){colorindex=0;}
+let currentColor1 = hexToRgb(coloronelight[colorindex]);
+let currentColor2 = hexToRgb(colortwodark[colorindex]);
+// const interval = 255;
+let steps = 255;
+
 rootelement.style.setProperty('--hexagonoutlinecolor',coloronelight[colorindex]);
 rootelement.style.setProperty('--hexagongradientmaxcolor',`${colortwodark[colorindex]} 60%,#ffffff`);
 rootelement.style.setProperty('--navcellcolor',`${colortwodark[colorindex]}`);
 
+function hexToRgb(hex) {
+  const bigint = parseInt(hex.substring(1), 16);
+  const r = (bigint >> 16) & 255;
+  const g = (bigint >> 8) & 255;
+  const b = bigint & 255;
+  return { r, g, b };
 }
-window.setInterval(changecolor,15000);
+
+
+function rgbToHex(r, g, b) {
+  return "#" + ((1 << 24) + (r << 16) + (g << 8) + b).toString(16).slice(1);
+}
+
+function calculateStep(start, end, stepCount) {
+  const difference = end -  start;
+  const step = (end - start) / stepCount;
+  if(Math.round(step)!=0){
+    console.log('not',Math.round(step))
+    return Math.round(step);
+  }
+  let roundedStep = (difference > 0) ? 1 : -1;
+  return roundedStep;
+}
+
+let changecolor =function()
+{colorindex=(colorindex+1)%6;
+rootelement.style.setProperty('--hexagonoutlinecolor',coloronelight[colorindex]);
+rootelement.style.setProperty('--hexagongradientmaxcolor',`${colortwodark[colorindex]} 60%,#ffffff`);
+rootelement.style.setProperty('--navcellcolor',`${colortwodark[colorindex]}`);
+}
+
+function updateColors() {
+  rootelement.style.setProperty('--hexagonoutlinecolor', rgbToHex(currentColor1.r, currentColor1.g, currentColor1.b));
+  rootelement.style.setProperty('--hexagongradientmaxcolor', `${rgbToHex(currentColor2.r, currentColor2.g, currentColor2.b)} 60%, #ffffff`);
+  rootelement.style.setProperty('--navcellcolor', rgbToHex(currentColor2.r, currentColor2.g, currentColor2.b));
+}
+
+function adjustValue(current, step, target) {
+  if ((step > 0 && current + step > target) || (step < 0 && current + step < target)) {
+      console.log('bounding condition');
+      return target;
+  }
+  return current + step;
+}
+
+function transitionColors() {
+  let nextColorIndex = (colorindex + 1) % coloronelight.length;
+  let nextColor1 = hexToRgb(coloronelight[nextColorIndex]);
+  let nextColor2 = hexToRgb(colortwodark[nextColorIndex]);
+  
+  let stepR1 = calculateStep(currentColor1.r, nextColor1.r, steps);
+  let stepG1 = calculateStep(currentColor1.g, nextColor1.g, steps);
+  let stepB1 = calculateStep(currentColor1.b, nextColor1.b, steps);
+
+  let stepR2 = calculateStep(currentColor2.r, nextColor2.r, steps);
+  let stepG2 = calculateStep(currentColor2.g, nextColor2.g, steps);
+  let stepB2 = calculateStep(currentColor2.b, nextColor2.b, steps);
+
+  let currentStep = 0;
+
+  function stepTransition() {
+    if (currentStep < steps) {
+        currentColor1.r = adjustValue(currentColor1.r, stepR1, nextColor1.r);
+        currentColor1.g = adjustValue(currentColor1.g, stepG1, nextColor1.g);
+        currentColor1.b = adjustValue(currentColor1.b, stepB1, nextColor1.b);
+
+        currentColor2.r = adjustValue(currentColor2.r, stepR2, nextColor2.r);
+        currentColor2.g = adjustValue(currentColor2.g, stepG2, nextColor2.g);
+        currentColor2.b = adjustValue(currentColor2.b, stepB2, nextColor2.b);
+
+      updateColors();
+      currentStep++;
+      requestAnimationFrame(stepTransition);
+    } else {
+      currentColor1 = nextColor1;
+      currentColor2 = nextColor2;
+      colorindex = nextColorIndex;
+      transitionColors();
+    }
+  }
+
+  stepTransition();
+}
+// changecolor()
+ transitionColors();
+// window.setInterval(changecolor,interval);
 const sqrtofthreestyles = getComputedStyle(rootelement);
 const sqrtofthreestylesvalue = sqrtofthreestyles.getPropertyValue('--sqrt-of-three');
 console.log(sqrtofthreestylesvalue);
