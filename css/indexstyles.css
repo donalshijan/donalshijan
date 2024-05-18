@@ -6,7 +6,7 @@ html{
   background-color: #ffffff;
 }
 :root{
-  --sqrt-of-three:;
+  --sqrt-of-three:0;
   --width-of-navbar:100;
   --number-of-navbarelements:5;
   --navhexagongap:.02;  /*once this value reaches .25 margin left becomes 0 */
@@ -21,8 +21,8 @@ html{
   --sidebarhexagongap:5%;
   --sidebarhexagoncolor:blue;
 /*This color is actually the same as sidebarelmentcolor but converted to rgb*/
-  --fonticonwidth:;
-  --fonticonheight:;
+  --fonticonwidth:0;
+  --fonticonheight:0;
   --white:#ffffff;
   --navicontoppadding:5px;
   --naviconbottompadding:5px;
@@ -159,7 +159,25 @@ color: rgba(255, 255, 255, 0.5);
   background-color: var(--hexagoncolor);
   visibility: visible;
   pointer-events: none;
-
+  
+}
+.hexagon p{
+  width: 50%;
+  height:40%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+  text-decoration: none;
+  clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+  background:var(--sidebargradient);
+  background-size: 400%;
+  background-repeat: no-repeat;
+  background-position: top right;
+  transition: 1200ms;
+  transition-timing-function: cubic-bezier(.18,.89,.32,1.28);
+  color: white
 }
 .outerhexagon1{
   top: calc(-30% + calc(var(--hexagongap) / 2));

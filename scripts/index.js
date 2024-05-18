@@ -29,7 +29,6 @@ function calculateStep(start, end, stepCount) {
   const difference = end -  start;
   const step = (end - start) / stepCount;
   if(Math.round(step)!=0){
-    console.log('not',Math.round(step))
     return Math.round(step);
   }
   let roundedStep = (difference > 0) ? 1 : -1;
@@ -51,7 +50,6 @@ function updateColors() {
 
 function adjustValue(current, step, target) {
   if ((step > 0 && current + step > target) || (step < 0 && current + step < target)) {
-      console.log('bounding condition');
       return target;
   }
   return current + step;
@@ -89,23 +87,23 @@ function transitionColors() {
       currentColor1 = nextColor1;
       currentColor2 = nextColor2;
       colorindex = nextColorIndex;
-      transitionColors();
+      setTimeout(transitionColors,3000);
     }
   }
 
   stepTransition();
 }
 // changecolor()
- transitionColors();
+setTimeout(transitionColors,3000)
 // window.setInterval(changecolor,interval);
-const sqrtofthreestyles = getComputedStyle(rootelement);
-const sqrtofthreestylesvalue = sqrtofthreestyles.getPropertyValue('--sqrt-of-three');
+const rootElementstyles = getComputedStyle(rootelement);
+const sqrtofthreestylesvalue = rootElementstyles.getPropertyValue('--sqrt-of-three');
 console.log(sqrtofthreestylesvalue);
 let viewportHeight = window.innerHeight;
 let viewportWidth = window.innerWidth;
 let widthFactor = viewportHeight/5*Math.sqrt(3);//considering half of viewportHeight as standard height
 var numberOfColumnsValue = 0;
-const numberOfColumns = document.querySelector('body');
+const body = document.querySelector('body');
 window.addEventListener('load',resizer);
 window.addEventListener('resize',resizer);
 function resizer(){
@@ -122,26 +120,9 @@ else if (Math.round(viewportWidth/widthFactor)==1) {
 else {
   numberOfColumnsValue = Math.round(viewportWidth/widthFactor)-1;
 }
-numberOfColumns.style.setProperty('--number-of-columns',numberOfColumnsValue);
+body.style.setProperty('--number-of-columns',numberOfColumnsValue);
 removegriddiv();
 createnewchildelements();
-// const a = document.getElementById('sidebarelement1');
-// let d = document.getElementsByClassName('fonts');
-// const b = getComputedStyle(a);
-// let bw = b.getPropertyValue('width');
-// let bh = b.getPropertyValue('height');
-// let fwh = b.getPropertyValue('background-size');
-// console.log(bw + ' ' + bh);
-// console.log(fwh);
-// bw=bw*4;
-// bh=bh*4;
-// for(let i=0;i<7;i++)
-// {d[i].style.setProperty("background-size",`${bw} ${bh}`);
-// const e = getComputedStyle(d[i]);
-// const ewh = e.getPropertyValue('background-size');
-// console.log(ewh);}
-// const bh = b.getPropertyValue('height');
-// d.style.setProperty('height',bh);
 }
 document.querySelector('body').onmousemove = (e) => {
 e.target.style.setProperty('--x',`${e.pageX}px`);
@@ -161,9 +142,10 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
 {let gridcell = document.createElement('div');
  gridcell.setAttribute("class","gridcell");
   grid.appendChild(gridcell);
-
+    console.log('i value ', i )
+    console.log('column',numberOfColumnsValue)
    for(let j = 0;j<10;j++)
-   {
+   {  console.log('j value',j)
      let gridcellelem = document.querySelectorAll('.gridcell')[i];
      let hexagon = document.createElement('div');
      hexagon.className="hexagon";
@@ -172,28 +154,26 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
        if(j==0)
        {
          hexagon.classList.add("outerhexagon1");
-         console.log('this is 1');
        }
 
        if(j==1)
        {
-         console.log('2');
          hexagon.classList.add("outerhexagon2");
        }
        if(j==2)
        {
          hexagon.classList.add("outerhexagon3");
-         let anchor = document.createElement('a');
-         anchor.classList.add('sidebarelement');
-         anchor.id='sidebarelement1';
-         anchor.setAttribute("href","https://www.facebook.com/Donal-Shijan-101295771265064/?modal=admin_todo_tour");
-         anchor.setAttribute("target","_blank");
-         let fonticon = document.createElement('i');
-         fonticon.classList.add("fab");
-         fonticon.classList.add("fa-facebook");
-         fonticon.classList.add("fonts");
-         anchor.appendChild(fonticon);
-         hexagon.appendChild(anchor);
+        //  let anchor = document.createElement('a');
+        //  anchor.classList.add('sidebarelement');
+        //  anchor.id='sidebarelement1';
+        //  anchor.setAttribute("href","https://www.facebook.com/Donal-Shijan-101295771265064/?modal=admin_todo_tour");
+        //  anchor.setAttribute("target","_blank");
+        //  let fonticon = document.createElement('i');
+        //  fonticon.classList.add("fab");
+        //  fonticon.classList.add("fa-facebook");
+        //  fonticon.classList.add("fonts");
+        //  anchor.appendChild(fonticon);
+        //  hexagon.appendChild(anchor);
 
        }
        if(j==3)
@@ -218,17 +198,17 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
        if(j==5)
        {
          hexagon.classList.add("outerhexagon6");
-         let anchor = document.createElement('a');
-         anchor.classList.add('sidebarelement');
-         anchor.id='sidebarelement3';
-         anchor.setAttribute("href","https://www.instagram.com/donalshijan/?hl=en");
-         anchor.setAttribute("target","_blank");
-         let fonticon = document.createElement('i');
-         fonticon.classList.add("fab");
-         fonticon.classList.add("fa-instagram");
-         fonticon.classList.add("fonts");
-         anchor.appendChild(fonticon);
-         hexagon.appendChild(anchor);
+        //  let anchor = document.createElement('a');
+        //  anchor.classList.add('sidebarelement');
+        //  anchor.id='sidebarelement3';
+        //  anchor.setAttribute("href","https://www.instagram.com/donalshijan/?hl=en");
+        //  anchor.setAttribute("target","_blank");
+        //  let fonticon = document.createElement('i');
+        //  fonticon.classList.add("fab");
+        //  fonticon.classList.add("fa-instagram");
+        //  fonticon.classList.add("fonts");
+        //  anchor.appendChild(fonticon);
+        //  hexagon.appendChild(anchor);
        }
        if(j==6)
        {
@@ -279,7 +259,6 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
 
        if(j==1)
        {
-         console.log('2');
          hexagon.classList.add("outerhexagon2");
        }
        if(j==2)
@@ -341,12 +320,10 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
        if(j==0)
        {
          hexagon.classList.add("outerhexagon1");
-         console.log('this is 1');
        }
 
        if(j==1)
        {
-         console.log('2');
          hexagon.classList.add("outerhexagon2");
        }
        if(j==2)
@@ -381,6 +358,11 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
        {
          hexagon.classList.add("outerhexagon10");
        }
+       const pElement = document.createElement('p');
+       pElement.textContent = j;
+       
+       // Append the p element to the hexagon element
+       hexagon.appendChild(pElement);
      }
 
     gridcellelem.appendChild(hexagon);
