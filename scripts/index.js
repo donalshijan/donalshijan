@@ -87,14 +87,14 @@ function transitionColors() {
       currentColor1 = nextColor1;
       currentColor2 = nextColor2;
       colorindex = nextColorIndex;
-      setTimeout(transitionColors,3000);
+      setTimeout(transitionColors,1000);
     }
   }
 
   stepTransition();
 }
 // changecolor()
-setTimeout(transitionColors,3000)
+setTimeout(transitionColors,1000)
 // window.setInterval(changecolor,interval);
 const rootElementstyles = getComputedStyle(rootelement);
 const sqrtofthreestylesvalue = rootElementstyles.getPropertyValue('--sqrt-of-three');
@@ -358,11 +358,14 @@ for(var i = 0;i<(numberOfColumnsValue * 2);i++)
        {
          hexagon.classList.add("outerhexagon10");
        }
-       const pElement = document.createElement('p');
-       pElement.textContent = j;
+       // this line will help you see the hexagons numbered to identify
+      //  const pElement = document.createElement('p');
+
        
-       // Append the p element to the hexagon element
-       hexagon.appendChild(pElement);
+      //  pElement.textContent = j;
+       
+      //  // Append the p element to the hexagon element
+      //  hexagon.appendChild(pElement);
      }
 
     gridcellelem.appendChild(hexagon);
